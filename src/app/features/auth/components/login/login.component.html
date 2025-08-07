@@ -31,7 +31,6 @@
         <h2>Welcome Back</h2>
         <p class="subtitle">Sign in to access your healthcare dashboard</p>
 
-
         <div class="alert alert-error" *ngIf="errorMessage">
           <span class="alert-icon">⚠️</span>
           {{ errorMessage }}
@@ -44,23 +43,24 @@
 
         <!-- Login Form -->
         <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="auth-form">
-          <!-- Role Selection -->
+          <!-- Role Selection Dropdown -->
           <div class="form-group">
             <label for="login-role">User Role</label>
-            <div class="role-grid">
-              <button
-                *ngFor="let role of roles"
-                type="button"
-                class="role-option"
-                [class.selected]="loginForm.get('role')?.value === role.value"
-                [style.--role-color]="role.color"
-                (click)="loginForm.patchValue({ role: role.value })">
-                <span class="role-icon">{{ role.icon }}</span>
-                <div class="role-text">
-                  <span class="role-label">{{ role.label }}</span>
-                  <small class="role-description">{{ role.description }}</small>
-                </div>
-              </button>
+            <div class="select-wrapper">
+              <span class="select-icon">{{ getRoleInfo(loginForm.get('role')?.value).icon }}</span>
+              <select 
+                id="login-role"
+                formControlName="role"
+                class="role-select"
+                [class.error]="hasFieldError(loginForm, 'role')">
+                <option *ngFor="let role of roles" [value]="role.value">
+                  {{ role.label }}
+                </option>
+              </select>
+              <span class="select-arrow">▼</span>
+            </div>
+            <div class="field-error" *ngIf="hasFieldError(loginForm, 'role')">
+              {{ getFieldError(loginForm, 'role') }}
             </div>
           </div>
 
@@ -133,23 +133,24 @@
 
         <!-- Register Form -->
         <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="auth-form">
-          <!-- Role Selection -->
+          <!-- Role Selection Dropdown -->
           <div class="form-group">
             <label for="register-role">User Role</label>
-            <div class="role-grid">
-              <button
-                *ngFor="let role of roles"
-                type="button"
-                class="role-option"
-                [class.selected]="registerForm.get('role')?.value === role.value"
-                [style.--role-color]="role.color"
-                (click)="registerForm.patchValue({ role: role.value })">
-                <span class="role-icon">{{ role.icon }}</span>
-                <div class="role-text">
-                  <span class="role-label">{{ role.label }}</span>
-                  <small class="role-description">{{ role.description }}</small>
-                </div>
-              </button>
+            <div class="select-wrapper">
+              <span class="select-icon">{{ getRoleInfo(registerForm.get('role')?.value).icon }}</span>
+              <select 
+                id="register-role"
+                formControlName="role"
+                class="role-select"
+                [class.error]="hasFieldError(registerForm, 'role')">
+                <option *ngFor="let role of roles" [value]="role.value">
+                  {{ role.label }} 
+                </option>
+              </select>
+              <span class="select-arrow">▼</span>
+            </div>
+            <div class="field-error" *ngIf="hasFieldError(registerForm, 'role')">
+              {{ getFieldError(registerForm, 'role') }}
             </div>
           </div>
 

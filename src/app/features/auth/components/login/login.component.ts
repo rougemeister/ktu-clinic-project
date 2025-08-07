@@ -27,41 +27,25 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
+  // Updated roles array with only three roles
   roles: RoleInfo[] = [
-    {
-      value: 'admin',
-      label: 'Administrator',
-      icon: '👨‍💼',
-      color: '#dc2626',
-      description: 'System administration and management'
-    },
-    {
-      value: 'doctor',
-      label: 'Doctor',
-      icon: '👨‍⚕️',
-      color: '#2563eb',
-      description: 'Medical diagnosis and treatment'
-    },
-    {
-      value: 'nurse',
-      label: 'Nurse',
-      icon: '👩‍⚕️',
-      color: '#059669',
-      description: 'Patient care and assistance'
-    },
-    {
-      value: 'receptionist',
-      label: 'Receptionist',
-      icon: '👥',
-      color: '#7c3aed',
-      description: 'Front desk and appointments'
-    },
     {
       value: 'patient',
       label: 'Patient',
       icon: '🙂',
       color: '#6b7280',
-      description: 'Medical care recipient'
+    },
+    {
+      value: 'doctor',
+      label: 'Doctor',
+      icon: '👨‍⚕️',
+      color: '#2563eb'
+    },
+    {
+      value: 'admin',
+      label: 'Administrator',
+      icon: '👨‍💼',
+      color: '#dc2626',
     }
   ];
 
@@ -236,6 +220,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   getRoleInfo(roleValue: UserRole): RoleInfo {
-    return this.roles.find(role => role.value === roleValue) || this.roles[4];
+    return this.roles.find(role => role.value === roleValue) || this.roles[0]; // Default to patient (index 0)
   }
 }

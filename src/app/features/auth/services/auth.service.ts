@@ -175,12 +175,11 @@ export class Auth {
     return 'mock-jwt-token-' + Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
   }
 
+  // Updated to only include the three roles
   private getRoleDisplayName(role: UserRole): string {
-    const roleNames = {
+    const roleNames: any = {
       admin: 'Administrator',
       doctor: 'Doctor',
-      nurse: 'Nurse',
-      receptionist: 'Receptionist',
       patient: 'Patient'
     };
     return roleNames[role] || role;
@@ -195,13 +194,21 @@ export class Auth {
     return !!this.currentUserValue;
   }
 
-  // Additional utility methods
+  // Additional utility methods - updated for three roles
   hasRole(role: UserRole): boolean {
     return this.currentUserValue?.role === role;
   }
 
   isAdmin(): boolean {
     return this.hasRole('admin');
+  }
+
+  isDoctor(): boolean {
+    return this.hasRole('doctor');
+  }
+
+  isPatient(): boolean {
+    return this.hasRole('patient');
   }
 
   getUserFullName(): string {

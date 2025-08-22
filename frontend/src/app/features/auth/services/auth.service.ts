@@ -1,43 +1,36 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, tap } from 'rxjs';
+import { Observable } from 'rxjs';
+import { AuthUser } from '../model/model';
 
-interface AuthResponse { accessToken: string; user: any; }
-
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthService {
-  private api = '/api/auth';
-  user$ = new BehaviorSubject<any>(null);
-  accessToken = '';
+  private apiUrl = 'http://localhost:3000/api/auth'; 
 
   constructor(private http: HttpClient) {}
 
-  login(credentials: { email: string; password: string }) {
-    return this.http.post<AuthResponse>(`${this.api}/login`, credentials, { withCredentials: true })
-      .pipe(tap(res => {
-        this.accessToken = res.accessToken;
-        console.log(this.accessToken)
-        this.user$.next(res.user);
-      }));
+  registerPatient(user: AuthUser): Observable<any> {
+    // force patient role
+    return this.http.post(`${this.apiUrl}/register`, { ...user, role: 'patient' });
   }
 
-  register(payload: any) {
-    return this.http.post(`${this.api}/register`, payload, { withCredentials: true });
+  login(email: string, password: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/login`, { email, password });
   }
 
-  refresh() {
-    return this.http.post<{ accessToken: string }>(`${this.api}/refresh`, {}, { withCredentials: true })
-      .pipe(tap(res => { this.accessToken = res.accessToken; }));
+  saveAuthData(token: string, user: any): void {
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
-  logout() {
-    this.accessToken = '';
-    this.user$.next(null);
-    return this.http.post(`${this.api}/logout`, {}, { withCredentials: true });
+  logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
   }
 
-  me() {
-    return this.http.get<{ user: any }>(`${this.api}/me`, { headers: { Authorization: `Bearer ${this.accessToken}` } })
-      .pipe(tap(res => this.user$.next(res.user)));
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('token');
   }
 }

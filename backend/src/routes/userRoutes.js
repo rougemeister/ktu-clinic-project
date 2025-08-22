@@ -1,66 +1,27 @@
-const express = require('express')
-
+const express = require('express');
 const router = express.Router();
+const {
+  getUsers,
+  getUserById,
+  updateUser,
+  deleteUser,
+} = require('../controllers/userController');
+const { protect, admin } = require('../middleware/authMiddleware');
 
-const User = require('../model/User');
+// @route   GET /api/users
+// @access  Private/Admin
+router.get('/', protect, admin, getUsers);
 
-//Get Users
-router.get('/', async (req, res) => {
-  try {
-    const users = await User.find();
-    res.json(users);
-  } catch (error) {
-    console.error(`Error fetching users: ${error}`);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
+// @route   GET /api/users/:id
+// @access  Private
+router.get('/:id', protect, getUserById);
 
+// @route   PUT /api/users/:id
+// @access  Private
+router.put('/:id', protect, updateUser);
 
-//Post create   Users
-
-router.post('/', async (req, res) => {
-  try {
-    const newUser = new User(req.body);
-    await newUser.save();
-    res.status(201).json(newUser);
-  } catch (error) {
-    console.error(`Error creating user: ${error}`);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
-
-//PUT : update
-
-router.put('/:id', async (req, res) => {
-  try {
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!updatedUser) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-    res.json(updatedUser);
-  } catch (error) {
-    console.error(`Error updating user: ${error}`);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
-
-//Delete: remove
-router.delete('/:id', async (req, res) => {
-  try {
-    const deletedUser = await User.findByIdAndDelete(req.params.id);
-    if (!deletedUser) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-    res.json({ message: 'User deleted successfully' });
-  } catch (error) {
-    console.error(`Error deleting user: ${error}`);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
-
-
+// @route   DELETE /api/users/:id
+// @access  Private/Admin
+router.delete('/:id', protect, admin, deleteUser);
 
 module.exports = router;

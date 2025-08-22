@@ -2,16 +2,14 @@ const User = require('../model/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+const JWT_SECRET = process.env.JWT_SECRET || 'defaultSecret'; // fallback for safety
 
-const JWT_SECRET = 'ktuClinicSecretKey';
-
-
-// @desc    Register a new user
-// @route   POST /api/users/register
+// @desc    Register a new patient
+// @route   POST /api/auth/register
 // @access  Public
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, password } = req.body;
 
     // Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -23,18 +21,18 @@ const registerUser = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Create user
+    // Force role to "patient" only
     const newUser = new User({
       name,
       email,
       password: hashedPassword,
-      role
+      role: 'patient'
     });
 
     await newUser.save();
 
     res.status(201).json({
-      message: 'User registered successfully',
+      message: 'Patient registered successfully',
       user: {
         id: newUser._id,
         name: newUser.name,
@@ -47,9 +45,8 @@ const registerUser = async (req, res) => {
   }
 };
 
-
 // @desc    Login user
-// @route   POST /api/users/login
+// @route   POST /api/auth/login
 // @access  Public
 const loginUser = async (req, res) => {
   try {
@@ -88,7 +85,6 @@ const loginUser = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
-
 
 module.exports = {
   registerUser,

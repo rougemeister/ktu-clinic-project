@@ -1,4 +1,5 @@
 // app.js
+require('dotenv').config(); // load .env
 const express = require('express');
 const cors = require('cors');
 
@@ -6,18 +7,22 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors({ origin: 'http://localhost:4200' })); // Angular frontend
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN || 'http://localhost:4200', // ✅ from .env
+  })
+);
 
 // Routes
 const userRoutes = require('./src/routes/userRoutes');
-const authRoutes = require('./src/routes/authRoutes'); // ✅ import auth routes
+const authRoutes = require('./src/routes/authRoutes');
 
 app.use('/api/users', userRoutes);
-app.use('/api/auth', authRoutes); // ✅ mount auth routes
+app.use('/api/auth', authRoutes);
 
-// Test route
+// Health check / Test route
 app.get('/', (req, res) => {
-  res.send('Welcome to the KTU Clinic API');
+  res.json({ message: 'Welcome to the KTU Clinic API 🚑' });
 });
 
 module.exports = app;

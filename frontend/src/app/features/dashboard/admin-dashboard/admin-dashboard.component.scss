@@ -1,0 +1,32 @@
+.admin-dashboard {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    .main-content {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        .dashboard-content {
+        flex: 1;
+        padding: 16px;
+        overflow-y: auto;
+    }
+    }
+
+
+}
+
+
+
+@media  screen and (min-width: 840px) {
+    .admin-dashboard {
+        flex-direction: row;
+        .main-content {
+            flex: 1;
+            .dashboard-content {
+                padding: 32px;
+            }
+        }
+    }
+}

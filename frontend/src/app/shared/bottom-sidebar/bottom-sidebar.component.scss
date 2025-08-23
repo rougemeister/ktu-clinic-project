@@ -1,0 +1,83 @@
+@use "../../../styles/colors" as *;
+
+span {
+    display: none;
+    font-weight: bold;
+    color: $grey-300;
+    padding-top: 0.3rem;
+    font-size: smaller;
+}
+
+ul {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem 1rem 0;
+
+    li {
+        flex: 1; // allows equal width columns
+        text-align: center;
+
+        a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 0.5rem 0;
+            width: 100%; // full width of li
+            height: auto;
+            text-decoration: none;
+            font-size: 0.875rem; // ~14px
+            font-weight: 500;
+        }
+    }
+}
+
+aside {
+    background-color: $grey-900;
+}
+
+aside a.active {
+    background-color: $beige-100;
+    border-radius: 0.5rem 0.5rem 0 0;
+    border-bottom: 0.25rem solid $green;
+    font-weight: bold;
+
+    span {
+        color: $grey-900;
+    }
+
+    svg path {
+        fill: $green;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    aside {
+        height: 4.625rem; 
+        padding-left: 2.5rem;
+        padding-right: 2.5rem;
+    }
+
+    span {
+        display: block;
+    }
+
+    ul {
+        li {
+            a {
+                flex-direction: column;
+                align-items: center;
+                height: auto;
+                width: 100%; 
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 824px) {
+    aside {
+        display: none;
+    }
+}

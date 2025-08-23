@@ -1,1 +1,14 @@
-<p>admin-dashboard works!</p>
+
+<div class="admin-dashboard">
+    <app-sidebar></app-sidebar>
+    <div class="main-content">
+        <app-header [title]="username"></app-header>
+        <div class="dashboard-content">
+        <router-outlet></router-outlet>
+        </div>
+    </div>
+    <app-bottom-sidebar></app-bottom-sidebar>
+</div>
+
+
+

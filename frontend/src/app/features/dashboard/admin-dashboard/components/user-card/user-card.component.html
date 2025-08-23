@@ -1,0 +1,12 @@
+<div class="user-card" [ngClass]="user.role">
+  <!-- User Initials -->
+  <div class="user-initials">
+    {{ user.name.charAt(0).toUpperCase() }}
+  </div>
+
+  <!-- User Details -->
+  <div class="user-details">
+    <div class="user-name">{{ user.name }}</div>
+    <div class="user-role">{{ user.role | titlecase }}</div>
+  </div>
+</div>

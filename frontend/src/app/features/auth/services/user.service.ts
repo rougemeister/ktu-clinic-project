@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../model/model';
-
 
 @Injectable({
   providedIn: 'root'
@@ -12,19 +11,27 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getUsers(): Observable<any> {
-    return this.http.get(this.apiUrl);
+  // 🔹 Add a helper to get headers with token
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token'); // token saved on login
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
   }
 
-  getUserById(id: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${id}`);
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.apiUrl, { headers: this.getAuthHeaders() });
   }
 
-  updateUser(id: string, userData: Partial<User>): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, userData);
+  getUserById(id: string): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/${id}`, { headers: this.getAuthHeaders() });
+  }
+
+  updateUser(id: string, userData: Partial<User>): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}/${id}`, userData, { headers: this.getAuthHeaders() });
   }
 
   deleteUser(id: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+    return this.http.delete(`${this.apiUrl}/${id}`, { headers: this.getAuthHeaders() });
   }
 }

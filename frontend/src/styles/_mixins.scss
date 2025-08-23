@@ -1,0 +1,223 @@
+//Responsiveness (Desktop-First Approach)x
+@use './typography' as *;
+@use './colors' as *;
+@use './spacing' as *;
+
+@mixin mobile {
+  @media (max-width: 425px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: 426px) and (max-width: 824px) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media (min-width: 769px) and (max-width: 1024px) {
+    @content;
+  }
+}
+
+
+
+//Text Presets
+
+@mixin text-preset-1 {
+  font-family: $font-primary;
+  font-size: $font-lg;
+  font-weight: $font-bold;
+  line-height: $line-sm;
+}
+
+@mixin text-preset-2 {
+  font-family: $font-primary;
+  font-size: $font-md;
+  font-weight: $font-bold;
+  line-height: $line-sm;
+}
+
+@mixin text-preset-3 {
+  font-family: $font-primary;
+  font-size: $font-sm;
+  font-weight: $font-bold;
+  line-height: $line-lg;
+}
+
+@mixin text-preset-4 {
+  font-family: $font-primary;
+  font-size: $font-xs;
+  font-weight: $font-regular;
+  line-height: $line-lg;
+}
+
+@mixin text-preset-4-bold {
+  font-family: $font-primary;
+  font-size: $font-xs;
+  font-weight: $font-bold;
+  line-height: $line-lg;
+}
+
+@mixin text-preset-5 {
+  font-family: $font-primary;
+  font-size: $font-xxs;
+  font-weight: $font-regular;
+  line-height: $line-lg;
+}
+
+@mixin text-preset-5-bold {
+  font-family: $font-primary;
+  font-size: $font-xxs;
+  font-weight: $font-bold;
+  line-height: $line-lg;
+}
+
+@mixin button-base {
+  border-radius: $spacing-sm;
+  padding: $spacing-lg;
+  cursor: pointer;
+}
+
+//Buttons
+// === Primary Button Mixin ===
+@mixin button-primary {
+  @include button-base;
+  @include text-preset-4-bold;
+  border: none;
+  color: $white;
+  background-color: $grey-500;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: $grey-900;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+// === Secondary Button Mixin ===
+@mixin button-secondary {
+  @include button-base;
+  @include text-preset-4-bold;
+  border: 1px solid $beige-500;
+  color: $grey-900;
+  background-color: $white;
+
+  &:hover {
+    background-color: $grey-100;
+    border: none;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+
+@mixin button-tertiary {
+
+  @include text-preset-4;
+  border: none;
+  color: $grey-900;
+
+  &:hover {
+    color: $grey-500;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+}
+
+
+@mixin button-destroy {
+  @include button-base;
+  @include text-preset-4-bold;
+  background-color: lighten($color: $red, $amount: 0.2);
+
+  &:hover {
+    background-color: $red;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+}
+
+
+// Input
+// === Basic Field ===
+@mixin basic-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  @include text-preset-4;
+
+  // label
+  label {
+    @include text-preset-5-bold;
+     color: $grey-500;
+  }
+
+  // input filed
+  input {
+    @include text-preset-4;
+    background-color: transparent;
+    color: $beige-500;
+    font-weight: $font-regular;
+    border: 1px solid $beige-500;
+    padding: 12px 20px;
+      border-radius: $spacing-sm;
+  overflow: hidden;
+  }
+
+  // helper text
+  p {
+     @include text-preset-5;
+     text-align: right;
+     color: $grey-500;
+  }
+
+}
+
+
+
+@mixin flex-center($justify: flex-start) {
+  display: flex;
+  align-items: center;
+  justify-content: $justify;
+}
+
+@mixin sidebar-link($color: $grey-300) {
+  font-weight: bold;
+  color: $color;
+  padding-left: 32px;
+  @include flex-center();
+  gap: 16px;
+  height: 56px;
+  width: 100%;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+@mixin active-link {
+  background-color: $beige-100;
+  border-radius: 0 12px 12px 0;
+  border-left: 4px solid $green;
+  font-weight: bold;
+
+  span {
+    color: $grey-900;
+  }
+
+  svg path {
+    fill: $green;
+  }
+}

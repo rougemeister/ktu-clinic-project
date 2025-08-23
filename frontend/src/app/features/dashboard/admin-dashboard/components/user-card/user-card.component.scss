@@ -1,0 +1,48 @@
+.user-card {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
+
+  &.admin {
+    background-color: #f8d7da;
+  }
+
+  &.user {
+    background-color: #d1ecf1;
+  }
+
+  &.nurse {
+    background-color: #d4edda;
+  }
+
+  .user-initials {
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #007bff;
+    color: white;
+    margin-right: 12px;
+  }
+
+  .user-details {
+    flex-grow: 1;
+
+    .user-name {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .user-role {
+      font-size: 14px;
+      color: #666;
+    }
+  }
+}

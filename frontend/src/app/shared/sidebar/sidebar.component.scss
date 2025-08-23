@@ -1,0 +1,91 @@
+@use "../../../styles/colors" as *;
+@use "../../../styles/mixins" as *;
+
+aside {
+  padding-right: 24px;
+  background-color: $grey-900;
+  height: 100%;
+  width: clamp(100px, 50vw, 300px);
+  overflow: hidden;
+  display: none;
+  flex-direction: column;
+   transition: width 4s ease;
+   align-items: stretch;
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: $white;
+}
+
+  .logo-container {
+    padding-left: 32px;
+    height: 102px;
+    @include flex-center();
+    margin-bottom: 24px;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    @include sidebar-link;
+  }
+
+ .minimize {
+  cursor: pointer;
+  @include sidebar-link;
+  margin-top: auto;
+  margin-bottom: 2rem;
+
+
+  svg {
+    transition: transform 0.3s ease;
+  }
+
+  svg.rotated {
+    transition: transform 0.3s ease;
+    background-color: $beige-100;
+    border-radius: 100px;
+    width: 40px;
+    height: 40px;
+    path {
+      fill: $grey-900;
+    }
+    padding: 5px;
+    transform: rotate(180deg);
+  }
+}
+  a.active {
+    @include active-link;
+  }
+
+}
+
+.icons {
+  margin-top: 7.8rem;
+}
+
+@media screen and (min-width: 824px){
+    aside {
+        display: flex;
+        transition: width 0.3s ease;
+        
+
+        .off{
+          display: none;
+      }
+    }
+
+            aside.shrink {
+               transition: width 0.3s ease;
+  padding-right: 1rem;
+  width: 6rem;
+}
+
+}

@@ -16,9 +16,12 @@ app.use(
 // Routes
 const userRoutes = require('./src/routes/userRoutes');
 const authRoutes = require('./src/routes/authRoutes');
+const patientRoutes = require("./src/routes/patientRoutes");
+
 
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
+app.use("/api/patients", patientRoutes);
 
 // Health check / Test route
 app.get('/', (req, res) => {

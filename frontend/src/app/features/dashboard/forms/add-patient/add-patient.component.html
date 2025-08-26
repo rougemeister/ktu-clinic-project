@@ -1,0 +1,204 @@
+<div class="add-patient-container">
+  <div class="form-header">
+    <h2>Add New Patient</h2>
+  </div>
+
+  <form [formGroup]="patientForm" (ngSubmit)="onSubmit()" class="patient-form">
+    
+    <!-- Success/Error Messages -->
+    <div *ngIf="submitMessage" class="alert alert-success">{{ submitMessage }}</div>
+    <div *ngIf="submitError" class="alert alert-error">{{ submitError }}</div>
+
+    <!-- Personal Information Section -->
+    <div class="form-section">
+      <h3>Personal Information</h3>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">First Name *</label>
+          <input 
+            type="text" 
+            id="firstName" 
+            formControlName="firstName"
+            [class.error]="patientForm.get('firstName')?.invalid && patientForm.get('firstName')?.touched">
+          <div class="error-message">{{ getFieldError('firstName') }}</div>
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Last Name *</label>
+          <input 
+            type="text" 
+            id="lastName" 
+            formControlName="lastName"
+            [class.error]="patientForm.get('lastName')?.invalid && patientForm.get('lastName')?.touched">
+          <div class="error-message">{{ getFieldError('lastName') }}</div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="dob">Date of Birth *</label>
+          <input 
+            type="date" 
+            id="dob" 
+            formControlName="dob"
+            [class.error]="patientForm.get('dob')?.invalid && patientForm.get('dob')?.touched">
+          <div class="error-message">{{ getFieldError('dob') }}</div>
+        </div>
+
+        <div class="form-group">
+          <label for="gender">Gender *</label>
+          <select 
+            id="gender" 
+            formControlName="gender"
+            [class.error]="patientForm.get('gender')?.invalid && patientForm.get('gender')?.touched">
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+          <div class="error-message">{{ getFieldError('gender') }}</div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="phone">Phone *</label>
+          <input 
+            type="tel" 
+            id="phone" 
+            formControlName="phone"
+            [class.error]="patientForm.get('phone')?.invalid && patientForm.get('phone')?.touched">
+          <div class="error-message">{{ getFieldError('phone') }}</div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input 
+            type="email" 
+            id="email" 
+            formControlName="email"
+            [class.error]="patientForm.get('email')?.invalid && patientForm.get('email')?.touched">
+          <div class="error-message">{{ getFieldError('email') }}</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password *</label>
+        <input 
+          type="password" 
+          id="password" 
+          formControlName="password"
+          [class.error]="patientForm.get('password')?.invalid && patientForm.get('password')?.touched">
+        <div class="error-message">{{ getFieldError('password') }}</div>
+      </div>
+    </div>
+
+    <!-- Address Section -->
+    <div class="form-section" formGroupName="address">
+      <h3>Address</h3>
+      
+      <div class="form-group">
+        <label for="street">Street *</label>
+        <input 
+          type="text" 
+          id="street" 
+          formControlName="street"
+          [class.error]="patientForm.get('address.street')?.invalid && patientForm.get('address.street')?.touched">
+        <div class="error-message">{{ getNestedFieldError('address', 'street') }}</div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="city">City *</label>
+          <input 
+            type="text" 
+            id="city" 
+            formControlName="city"
+            [class.error]="patientForm.get('address.city')?.invalid && patientForm.get('address.city')?.touched">
+          <div class="error-message">{{ getNestedFieldError('address', 'city') }}</div>
+        </div>
+
+        <div class="form-group">
+          <label for="state">State *</label>
+          <input 
+            type="text" 
+            id="state" 
+            formControlName="state"
+            [class.error]="patientForm.get('address.state')?.invalid && patientForm.get('address.state')?.touched">
+          <div class="error-message">{{ getNestedFieldError('address', 'state') }}</div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="zip">ZIP Code *</label>
+          <input 
+            type="text" 
+            id="zip" 
+            formControlName="zip"
+            [class.error]="patientForm.get('address.zip')?.invalid && patientForm.get('address.zip')?.touched">
+          <div class="error-message">{{ getNestedFieldError('address', 'zip') }}</div>
+        </div>
+
+        <div class="form-group">
+          <label for="country">Country *</label>
+          <input 
+            type="text" 
+            id="country" 
+            formControlName="country"
+            [class.error]="patientForm.get('address.country')?.invalid && patientForm.get('address.country')?.touched">
+          <div class="error-message">{{ getNestedFieldError('address', 'country') }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Emergency Contact Section -->
+    <div class="form-section" formGroupName="emergencyContact">
+      <h3>Emergency Contact</h3>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="emergencyName">Name *</label>
+          <input 
+            type="text" 
+            id="emergencyName" 
+            formControlName="name"
+            [class.error]="patientForm.get('emergencyContact.name')?.invalid && patientForm.get('emergencyContact.name')?.touched">
+          <div class="error-message">{{ getNestedFieldError('emergencyContact', 'name') }}</div>
+        </div>
+
+        <div class="form-group">
+          <label for="relation">Relation *</label>
+          <input 
+            type="text" 
+            id="relation" 
+            formControlName="relation"
+            [class.error]="patientForm.get('emergencyContact.relation')?.invalid && patientForm.get('emergencyContact.relation')?.touched">
+          <div class="error-message">{{ getNestedFieldError('emergencyContact', 'relation') }}</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="emergencyPhone">Phone *</label>
+        <input 
+          type="tel" 
+          id="emergencyPhone" 
+          formControlName="phone"
+          [class.error]="patientForm.get('emergencyContact.phone')?.invalid && patientForm.get('emergencyContact.phone')?.touched">
+        <div class="error-message">{{ getNestedFieldError('emergencyContact', 'phone') }}</div>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-actions">
+      <button 
+        type="submit" 
+        class="btn-primary"
+        [disabled]="isSubmitting">
+        <span *ngIf="isSubmitting">Creating...</span>
+        <span *ngIf="!isSubmitting">Create Patient</span>
+      </button>
+    </div>
+  </form>
+</div>
